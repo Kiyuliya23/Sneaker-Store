@@ -45,7 +45,7 @@ function Header() {
             <MyLink to="/" end>
               Главная
             </MyLink>
-            <MyLink to="/cart">Корзина</MyLink>
+            <MyLink to="/bin">Корзина</MyLink>
             <MyLink to="/contacts">Контакты</MyLink>
           </Box>
         </Box>

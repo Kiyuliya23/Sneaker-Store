@@ -122,6 +122,7 @@ function Footer() {
           >
             2024 Сникер-магазин. Все права защищены
           </Typography>
+
           <Controller
             name="email"
             control={control}
@@ -129,51 +130,77 @@ function Footer() {
             rules={{
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-
                 message: "Введите корректный email",
               },
             }}
             render={({ field, fieldState: { error } }) => (
-              <TextField
-                {...field}
-                id="standard-basic"
-                label={focused ? "Ваш email:" : "Введите свой email:"}
-                variant="standard"
-                onFocus={() => setFocused(true)}
-                onBlur={() => {
-                  field.onBlur();
-
-                  setFocused(false);
-                }}
-                error={!!error}
-                helperText={error?.message}
+              <Box
                 sx={{
+                  position: "relative",
                   width: "21.2vw",
-                  "& .MuiInputBase-input": {
-                    color: "#fff",
-                    opacity: 0.8,
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontWeight: 400,
-                    fontSize: "1.04vw",
-                    lineHeight: "81%",
-                    color: "rgba(255, 255, 255, 0.5)",
-                    opacity: 0.8,
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: "rgba(255, 255, 255, 0.5)",
-                  },
-                  "& .MuiInput-underline:before": {
-                    borderBottomColor: "rgba(255, 255, 255, 0.5)",
-                  },
-                  "& .MuiInput-underline:hover:before": {
-                    borderBottomColor: "rgba(255, 255, 255, 0.8)",
-                  },
-                  "& .MuiInput-underline:after": {
-                    borderBottomColor: "rgba(255, 255, 255, 0.8)",
-                  },
                 }}
-              />
+              >
+                <TextField
+                  {...field}
+                  id="standard-basic"
+                  label={focused ? "Ваш email:" : "Введите свой email:"}
+                  variant="standard"
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => {
+                    field.onBlur();
+                    setFocused(false);
+                  }}
+                  error={!!error}
+                  sx={{
+                    width: "100%",
+
+                    "& .MuiInputBase-input": {
+                      color: "#fff",
+                      opacity: 0.8,
+                    },
+
+                    "& .MuiInputLabel-root": {
+                      fontWeight: 400,
+                      fontSize: "1.04vw",
+                      lineHeight: "81%",
+                      color: "rgba(255, 255, 255, 0.5)",
+                      opacity: 0.8,
+                    },
+
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: "rgba(255, 255, 255, 0.5)",
+                    },
+
+                    "& .MuiInput-underline:before": {
+                      borderBottomColor: "rgba(255, 255, 255, 0.5)",
+                    },
+
+                    "& .MuiInput-underline:hover:before": {
+                      borderBottomColor: "rgba(255, 255, 255, 0.8)",
+                    },
+
+                    "& .MuiInput-underline:after": {
+                      borderBottomColor: "rgba(255, 255, 255, 0.8)",
+                    },
+                  }}
+                />
+
+                {error && (
+                  <Typography
+                    sx={{
+                      position: "absolute",
+                      top: "calc(100% + 0.3vw)",
+                      left: 0,
+                      fontSize: "0.65vw",
+                      lineHeight: 1,
+                      color: "#d32f2f",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {error.message}
+                  </Typography>
+                )}
+              </Box>
             )}
           />
         </Box>

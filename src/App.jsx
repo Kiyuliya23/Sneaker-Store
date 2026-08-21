@@ -5,6 +5,7 @@ import MainPage from "./pages/mainPage/mainPage";
 import BinPage from "./pages/binPage/components/binPage";
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
+import ContactPage from "./pages/contacts/components/contactsPage";
 
 const theme = createTheme({
   typography: {
@@ -19,7 +20,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/cart" element={<BinPage />} />
+          <Route path="/bin" element={<BinPage />} />
+          <Route path="/contacts" element={<ContactPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

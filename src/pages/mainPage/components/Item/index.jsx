@@ -16,18 +16,34 @@ function Item() {
   const [products, setProducts] = useState([]);
   const [activeProducts, setActiveProducts] = useState([]);
 
-  function changeSign(id) {
-    setActiveProducts((prev) =>
-      prev.includes(id)
-        ? prev.filter((productId) => productId !== id)
-        : [...prev, id],
-    );
+  async function changeSign(product) {
+    try {
+      const response = await axios.post(
+        "https://6a833c7ccb486d2434037f53.mockapi.io/cartItems",
+        {
+          productId: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+        },
+      );
+
+      console.log("Товар добавлен:", response.data);
+
+      setActiveProducts((prev) => [...prev, product.id]);
+    } catch (error) {
+      console.error("Ошибка при добавлении товара:", error);
+    }
   }
 
   useEffect(() => {
     const getProducts = async () => {
-      const data = await items();
-      setProducts(data);
+      try {
+        const data = await items();
+        setProducts(data);
+      } catch (error) {
+        console.error("Ошибка при загрузке товаров:", error);
+      }
     };
 
     getProducts();
@@ -107,7 +123,7 @@ function Item() {
                   backgroundColor: "black",
                 },
               }}
-              onClick={() => changeSign(product.id)}
+              onClick={() => changeSign(product)}
             >
               {activeProducts.includes(product.id) ? "-" : "+"}
             </Button>
