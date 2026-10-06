@@ -11,29 +11,30 @@ const CART_URL = "https://6a833c7ccb486d2434037f53.mockapi.io/cartItems";
 function BinItems() {
   const [carts, setCarts] = useState([]);
 
-  const getCarts = async () => {
-    try {
-      const response = await axios.get(CART_URL);
+  useEffect(() => {
+    const getCarts = async () => {
+      try {
+        const response = await axios.get(CART_URL);
+        setCarts(response.data);
+      } catch (error) {
+        console.error("Ошибка при загрузке корзины:", error);
+      }
+    };
 
-      setCarts(response.data);
-    } catch (error) {
-      console.error("Ошибка при загрузке корзины:", error);
-    }
-  };
+    getCarts();
+  }, []);
 
   const handleDelete = async (cart) => {
     try {
       await axios.delete(`${CART_URL}/${cart.id}`);
+
       window.dispatchEvent(new Event("cartUpdated"));
-      getCarts();
+
+      setCarts((prevCarts) => prevCarts.filter((item) => item.id !== cart.id));
     } catch (error) {
       console.error("Ошибка при удалении товара:", error);
     }
   };
-
-  useEffect(() => {
-    getCarts();
-  }, []);
 
   if (carts.length === 0) {
     return (
@@ -41,7 +42,6 @@ function BinItems() {
         sx={{
           paddingTop: "5.938vw",
           paddingBottom: "5.938vw",
-
           transform: "translateX(26.04vw)",
         }}
       >
@@ -99,7 +99,6 @@ function BinItems() {
         display: "flex",
         flexDirection: "column",
         gap: "3.49vw",
-
         width: "fit-content",
       }}
     >
@@ -110,7 +109,6 @@ function BinItems() {
             display: "flex",
             width: "47.031vw",
             height: "6.979vw",
-            // marginTop: "5.938vw",
             alignItems: "center",
             background: "#fafafa",
             borderRadius: "0.521vw",
@@ -120,6 +118,7 @@ function BinItems() {
             src={cart.image}
             alt={cart.name}
             style={{
+              boxSizing: "border-box",
               width: "10.26vw",
               height: "4.688vw",
               objectFit: "cover",
@@ -128,10 +127,13 @@ function BinItems() {
               borderRight: "1px solid rgba(0, 0, 0, 0.5)",
             }}
           />
+
           <Box
             sx={{
               display: "flex",
-              gap: "7.14vw",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flex: 1,
               paddingRight: "1.2vw",
             }}
           >
@@ -141,7 +143,6 @@ function BinItems() {
                 paddingLeft: "1.875vw",
                 gap: "1.04vw",
                 alignItems: "center",
-                // paddingRight: "1.2vw",
               }}
             >
               <Typography
@@ -165,6 +166,7 @@ function BinItems() {
                 >
                   Цена:
                 </Typography>
+
                 <Typography
                   sx={{
                     fontWeight: 700,
@@ -176,23 +178,26 @@ function BinItems() {
                 </Typography>
               </Box>
             </Box>
+
             <Button
               onClick={() => handleDelete(cart)}
               sx={{
-                borderRadius: "100%",
+                minWidth: 0,
+                width: "3vw",
+                height: "3vw",
+                padding: 0,
+                borderRadius: "50%",
                 backgroundColor: "#f3f3f3",
               }}
             >
-              {
-                <img
-                  src={Bin}
-                  alt="Удалить"
-                  style={{
-                    width: "1.56vw",
-                    height: "1.61vw",
-                  }}
-                />
-              }
+              <img
+                src={Bin}
+                alt="Удалить"
+                style={{
+                  width: "1.56vw",
+                  height: "1.61vw",
+                }}
+              />
             </Button>
           </Box>
         </Box>

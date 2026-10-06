@@ -82,7 +82,15 @@ function Item() {
               }}
             />
 
-            <Typography>{product.name}</Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: "1.25vw",
+                color: "#000",
+              }}
+            >
+              {product.name}
+            </Typography>
           </Box>
 
           <Box
@@ -93,7 +101,16 @@ function Item() {
             }}
           >
             <Box>
-              <Typography>Цена:</Typography>
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "0.729vw",
+                  textTransform: "uppercase",
+                  color: "#666",
+                }}
+              >
+                Цена:
+              </Typography>
 
               <Typography
                 sx={{
